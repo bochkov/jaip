@@ -9,10 +9,12 @@
 <div th:fragment="menu">
     <div class="head">
         <ul class="nav nav-pills pull-right">
-            <li th:with="curUrl=@{/news/}" th:attr="class=${#httpServletRequest.requestURI.startsWith(curUrl) ? 'active' : ''}">
+            <li th:with="curUrl=@{/news/}"
+                th:attr="class=${#httpServletRequest.requestURI.startsWith(curUrl) ? 'active' : ''}">
                 <a th:href="@{/news/}" href="#">Новости</a>
             </li>
-            <li th:with="curUrl=@{/pdf/}" th:attr="class=${#httpServletRequest.requestURI.startsWith(curUrl) ? 'active' : ''}">
+            <li th:with="curUrl=@{/pdf/}"
+                th:attr="class=${#httpServletRequest.requestURI.startsWith(curUrl) ? 'active' : ''}">
                 <a href="#" th:href="@{/pdf/}">pdf tool</a>
             </li>
         </ul>

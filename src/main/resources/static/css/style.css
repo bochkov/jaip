@@ -96,7 +96,7 @@ a#logo img {
 #scroller {
     display: none;
     font-size: 4em;
-    position:fixed;
+    position: fixed;
     left: 10%;
     bottom: 10%;
     color: gray;
@@ -119,98 +119,104 @@ a#logo img {
    Animation example, for spinners
 */
 .animate-spin {
-  -moz-animation: spin 2s infinite linear;
-  -o-animation: spin 2s infinite linear;
-  -webkit-animation: spin 2s infinite linear;
-  animation: spin 2s infinite linear;
-  display: inline-block;
+    -moz-animation: spin 2s infinite linear;
+    -o-animation: spin 2s infinite linear;
+    -webkit-animation: spin 2s infinite linear;
+    animation: spin 2s infinite linear;
+    display: inline-block;
 }
+
 @-moz-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    0% {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+    100% {
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
+
 @-webkit-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    0% {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+    100% {
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
+
 @-o-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    0% {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+    100% {
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
+
 @-ms-keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
+    0% {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+    100% {
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
-@keyframes spin {
-  0% {
-    -moz-transform: rotate(0deg);
-    -o-transform: rotate(0deg);
-    -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
 
-  100% {
-    -moz-transform: rotate(359deg);
-    -o-transform: rotate(359deg);
-    -webkit-transform: rotate(359deg);
-    transform: rotate(359deg);
-  }
+@keyframes spin {
+    0% {
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(359deg);
+        -o-transform: rotate(359deg);
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
 }
 
 @font-face {
-  font-family: 'fontello';
-  src: url('../fonts/fontello.eot?41508586');
-  src: url('../fonts/fontello.eot?41508586#iefix') format('embedded-opentype'),
-       url('../fonts/fontello.woff?41508586') format('woff'),
-       url('../fonts/fontello.ttf?41508586') format('truetype'),
-       url('../fonts/fontello.svg?41508586#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'fontello';
+    src: url('../fonts/fontello.eot?41508586');
+    src: url('../fonts/fontello.eot?41508586#iefix') format('embedded-opentype'),
+    url('../fonts/fontello.woff?41508586') format('woff'),
+    url('../fonts/fontello.ttf?41508586') format('truetype'),
+    url('../fonts/fontello.svg?41508586#fontello') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
+
 /* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
 /* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
 /*
@@ -222,51 +228,119 @@ a#logo img {
 }
 */
 
- [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "fontello";
-  font-style: normal;
-  font-weight: normal;
-  speak: none;
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
 
-  display: inline-block;
-  text-decoration: inherit;
-  width: 1em;
-  margin-right: .2em;
-  text-align: center;
-  /* opacity: .8; */
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
 
-  /* For safety - reset parent styles, that can break glyph codes*/
-  font-variant: normal;
-  text-transform: none;
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
 
-  /* fix buttons height, for twitter bootstrap */
-  line-height: 1em;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
 
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .2em;
 
-  /* you can be more comfortable with increased icons size */
-  font-size: 120%;
+    /* you can be more comfortable with increased icons size */
+    font-size: 120%;
 
-  /* Uncomment for 3D effect */
-  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
- }
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
 
-.icon-13n:before { content: '\e80f'; } /* '' */
-.icon-04d:before { content: '\e806'; } /* '' */
-.icon-03n:before { content: '\e805'; } /* '' */
-.icon-11n:before { content: '\e80c'; } /* '' */
-.icon-09n:before { content: '\e809'; } /* '' */
-.icon-10n:before { content: '\e80b'; } /* '' */
-.icon-01d:before { content: '\e800'; } /* '' */
-.icon-01n:before { content: '\e801'; } /* '' */
-.icon-04n:before { content: '\e807'; } /* '' */
-.icon-02n:before { content: '\e803'; } /* '' */
-.icon-50d:before { content: '\e810'; } /* '' */
-.icon-03d:before { content: '\e804'; } /* '' */
-.icon-11d:before { content: '\e80d'; } /* '' */
-.icon-09d:before { content: '\e808'; } /* '' */
-.icon-10d:before { content: '\e80a'; } /* '' */
-.icon-13d:before { content: '\e80e'; } /* '' */
-.icon-02d:before { content: '\e802'; } /* '' */
+.icon-13n:before {
+    content: '\e80f';
+}
+
+/* '' */
+.icon-04d:before {
+    content: '\e806';
+}
+
+/* '' */
+.icon-03n:before {
+    content: '\e805';
+}
+
+/* '' */
+.icon-11n:before {
+    content: '\e80c';
+}
+
+/* '' */
+.icon-09n:before {
+    content: '\e809';
+}
+
+/* '' */
+.icon-10n:before {
+    content: '\e80b';
+}
+
+/* '' */
+.icon-01d:before {
+    content: '\e800';
+}
+
+/* '' */
+.icon-01n:before {
+    content: '\e801';
+}
+
+/* '' */
+.icon-04n:before {
+    content: '\e807';
+}
+
+/* '' */
+.icon-02n:before {
+    content: '\e803';
+}
+
+/* '' */
+.icon-50d:before {
+    content: '\e810';
+}
+
+/* '' */
+.icon-03d:before {
+    content: '\e804';
+}
+
+/* '' */
+.icon-11d:before {
+    content: '\e80d';
+}
+
+/* '' */
+.icon-09d:before {
+    content: '\e808';
+}
+
+/* '' */
+.icon-10d:before {
+    content: '\e80a';
+}
+
+/* '' */
+.icon-13d:before {
+    content: '\e80e';
+}
+
+/* '' */
+.icon-02d:before {
+    content: '\e802';
+}
+
+/* '' */

@@ -11,10 +11,10 @@
         <div class="page-title">
             <div class="row">
                 <form ng-submit="get_weather()">
-                <h1>Погода в городе
-                    <label for="city"></label>
-                    <input style="border: none" name="city" ng-model="city" id="city"/>
-                </h1>
+                    <h1>Погода в городе
+                        <label for="city"></label>
+                        <input style="border: none" name="city" ng-model="city" id="city"/>
+                    </h1>
                 </form>
             </div>
         </div>
@@ -33,20 +33,26 @@
         <div class="row text-center">
             <div class="col-md-4">
                 <dl>
-                    <dt>Влажность</dt><dd>{{ weather.main.humidity }} %</dd>
-                    <dt>Атмосферное давление</dt><dd>{{ weather.main.pressure }} гПа ({{ weather.main.pressure|to_mmHg|number:2 }} мм рт. ст.)</dd>
+                    <dt>Влажность</dt>
+                    <dd>{{ weather.main.humidity }} %</dd>
+                    <dt>Атмосферное давление</dt>
+                    <dd>{{ weather.main.pressure }} гПа ({{ weather.main.pressure|to_mmHg|number:2 }} мм рт. ст.)</dd>
                 </dl>
             </div>
             <div class="col-md-4">
                 <dl>
-                    <dt>Скорость ветра</dt><dd>{{ weather.wind.speed }} м/с</dd>
-                    <dt>Направление ветра</dt><dd>{{ weather.wind.deg|wind_direction }} {{ weather.wind.deg }}&deg;</dd>
+                    <dt>Скорость ветра</dt>
+                    <dd>{{ weather.wind.speed }} м/с</dd>
+                    <dt>Направление ветра</dt>
+                    <dd>{{ weather.wind.deg|wind_direction }} {{ weather.wind.deg }}&deg;</dd>
                 </dl>
             </div>
             <div class="col-md-4">
                 <dl>
-                    <dt>Восход</dt><dd>{{ weather.sys.sunrise * 1000 | date:"HH:mm" }}</dd>
-                    <dt>Закат</dt><dd>{{ weather.sys.sunset * 1000 | date:"HH:mm" }}</dd>
+                    <dt>Восход</dt>
+                    <dd>{{ weather.sys.sunrise * 1000 | date:"HH:mm" }}</dd>
+                    <dt>Закат</dt>
+                    <dd>{{ weather.sys.sunset * 1000 | date:"HH:mm" }}</dd>
                 </dl>
             </div>
         </div>
@@ -65,7 +71,8 @@
             </tr>
             <tr ng-repeat="h in forecast_hourly.list | limitTo:9 ">
                 <td>{{ h.dt * 1000 | date:"dd MMMM, HH:mm" }}</td>
-                <td><abbr class="no-border" title="{{ h.weather[0].main }}"><i class="icon-{{ h.weather[0].icon }}"></i></abbr></td>
+                <td><abbr class="no-border" title="{{ h.weather[0].main }}"><i class="icon-{{ h.weather[0].icon }}"></i></abbr>
+                </td>
                 <td>{{ h.main.temp|number:1 }}</td>
                 <td>{{ h.main.humidity }}</td>
                 <td>{{ h.main.pressure|number:1 }}</td>
@@ -76,9 +83,9 @@
         <div id="temp" class="hc-weather-chart" chart-title="Температура воздуха, &deg;C"
              chart-color="0" chart-data="hourly.temp" chart-tooltip="Температура" chart-value-suffix=" &deg;C"></div>
         <div id="humidity" class="hc-weather-chart" chart-title="Влажность воздуха, %"
-                chart-color="1" chart-data="hourly.humidity" chart-tooltip="Влажность" chart-value-suffix=" %"></div>
+             chart-color="1" chart-data="hourly.humidity" chart-tooltip="Влажность" chart-value-suffix=" %"></div>
         <div id="pressure" class="hc-weather-chart" chart-title="Атмосферное давление, гПа"
-                chart-color="2" chart-data="hourly.pressure" chart-tooltip="Давление" chart-value-suffix=" гПа"></div>
+             chart-color="2" chart-data="hourly.pressure" chart-tooltip="Давление" chart-value-suffix=" гПа"></div>
 
         <h1>Прогноз погоды на 14 дней</h1>
         <table class="table table-weather">
@@ -96,7 +103,8 @@
             </tr>
             <tr ng-repeat="d in forecast.list">
                 <td>{{ d.dt * 1000 |date:"EEEE" }}<br/>{{ d.dt * 1000 |date:"d MMMM" }}</td>
-                <td><abbr class="no-border" title="{{ d.weather[0].main }}"><i class="icon-{{ d.weather[0].icon }}"></i></abbr></td>
+                <td><abbr class="no-border" title="{{ d.weather[0].main }}"><i class="icon-{{ d.weather[0].icon }}"></i></abbr>
+                </td>
                 <td>{{ d.temp.min|number:1 }}</td>
                 <td>{{ d.temp.max|number:1 }}</td>
                 <td><span ng-if="d.humidity">{{d.humidity}}</span></td>
@@ -105,17 +113,19 @@
             </tr>
         </table>
 
-        <div id="temp-daily" class="hc-average-chart" chart-data-ranges="daily.ranges" chart-data-averages="daily.averages"
-                chart-title="Температура, °C" chart-tooltip="Средняя температура"></div>
+        <div id="temp-daily" class="hc-average-chart" chart-data-ranges="daily.ranges"
+             chart-data-averages="daily.averages"
+             chart-title="Температура, °C" chart-tooltip="Средняя температура"></div>
         <div id="rain-daily" class="hc-column-chart" chart-title="Осадки, мм" chart-value-suffix=" мм"
-                chart-name1="Дождь" chart-data1="daily.rain" chart-name2="Снег" chart-data2="daily.snow"></div>
+             chart-name1="Дождь" chart-data1="daily.rain" chart-name2="Снег" chart-data2="daily.snow"></div>
 
     </div>
 </div>
 
 <div th:replace="include/_footer :: footer"></div>
 
-<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&amp;lang=ru-RU" type="text/javascript"></script>
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&amp;lang=ru-RU"
+        type="text/javascript"></script>
 
 </body>
 </html>

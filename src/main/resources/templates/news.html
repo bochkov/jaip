@@ -10,20 +10,24 @@
 
         <div class="page-title" ng-controller="ImageController">
             <img id="logo" ng-src="{{path}}" ng-click="random_image(4, '/static/img/news/')"
-                 ng-init="random_image(4, '/static/img/news/')" />
+                 ng-init="random_image(4, '/static/img/news/')"/>
         </div>
 
         <hr/>
 
         <div class="row" id="content" ng-controller="NewsController" ng-init="slug='met'; get_news(slug)">
             <ul class="nav nav-tabs">
-                <li ng-class="{active : slug=='main'}"><a href="#" ng-click="slug='main'; get_news(slug)">Главные новости</a></li>
-                <li ng-class="{active : slug=='met'}"><a href="#" ng-click="slug='met'; get_news('met')">Новости металлургии</a></li>
-                <li ng-class="{active : slug=='sport'}"><a href="#" ng-click="slug='sport'; get_news('sport')">Новости спорта</a></li>
+                <li ng-class="{active : slug=='main'}"><a href="#" ng-click="slug='main'; get_news(slug)">Главные
+                    новости</a></li>
+                <li ng-class="{active : slug=='met'}"><a href="#" ng-click="slug='met'; get_news('met')">Новости
+                    металлургии</a></li>
+                <li ng-class="{active : slug=='sport'}"><a href="#" ng-click="slug='sport'; get_news('sport')">Новости
+                    спорта</a></li>
             </ul>
 
             <div ng-repeat="item in news | orderBy:'pubDate':true" class="row news-item">
                 <h4><a href="#" ng-href="{{item.link}}" target="_blank">{{item.title}}</a></h4>
+
                 <div class="col-md-9">
                     <p ng-bind-html="item.description|html"></p>
                     <small class="text-muted">
@@ -35,7 +39,7 @@
                     </small>
                 </div>
                 <div class="col-md-3" ng-if="item.enclosure">
-                    <img ng-src="{{item.enclosure}}" class="img-thumbnail" />
+                    <img ng-src="{{item.enclosure}}" class="img-thumbnail"/>
                 </div>
             </div>
         </div>
@@ -49,17 +53,17 @@
 
 <div th:replace="include/_footer :: footer"></div>
 <script>
-    $(function(){
+    $(function () {
         var sc = $("#scroller");
         if ($(window).scrollTop() > 300)
             sc.show();
-        $(window).scroll(function(){
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 300)
                 sc.fadeIn();
             else
                 sc.fadeOut();
         });
-        sc.click(function(){
+        sc.click(function () {
             $('body,html').animate({scrollTop: 0}, 500);
             return false;
         });

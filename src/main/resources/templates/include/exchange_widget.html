@@ -11,17 +11,22 @@
         <a th:href="@{/exchange/}" href="#">Курсы валют</a>
         <small><span class="btn-link" id="refresh-exchange" ng-click="get_exchange()">
         <i class="glyphicon glyphicon-refresh pull-right" ng-class="{'animate-spin': exchange_animate_spin}"></i>
-    </span></small><br/>
+    </span></small>
+        <br/>
         <small>на {{ exchange[0].rates[0].currentDate | date:"dd MMMM yyyy" }}</small>
     </h4>
 
     <table class="table table-condensed">
         <tr ng-repeat="ex in exchange | orderBy:'order'">
             <td style="font-size: 24px; vertical-align: middle;">{{ ex.sign }}</td>
-            <td style="font-family: 'Droid Sans Mono', monospace; font-size: 21px; vertical-align: middle;">{{ ex.rates[0].currentValue |number:3 }}</td>
+            <td style="font-family: 'Droid Sans Mono', monospace; font-size: 21px; vertical-align: middle;">{{
+                ex.rates[0].currentValue |number:3 }}
+            </td>
             <td style="vertical-align: middle; font-size: 17px;">
-                <span ng-if="(ex.rates[0].currentValue - ex.rates[0].previousValue) | gtn" class="glyphicon glyphicon-arrow-up" style="color: green;"></span>
-                <span ng-if="(ex.rates[0].currentValue - ex.rates[0].previousValue) | ltn" class="glyphicon glyphicon-arrow-down" style="color: red;"></span>
+                <span ng-if="(ex.rates[0].currentValue - ex.rates[0].previousValue) | gtn"
+                      class="glyphicon glyphicon-arrow-up" style="color: green;"></span>
+                <span ng-if="(ex.rates[0].currentValue - ex.rates[0].previousValue) | ltn"
+                      class="glyphicon glyphicon-arrow-down" style="color: red;"></span>
             </td>
             <td style="text-align: right; font-family: 'Droid Sans Mono', monospace; font-size: 17px; vertical-align: middle;">
                 {{ ex.rates[0].currentValue - ex.rates[0].previousValue | number:3 }}

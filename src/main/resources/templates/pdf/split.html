@@ -14,19 +14,24 @@
 
         <div class="row" id="content">
             <form enctype="multipart/form-data" class="form-horizontal" th:object="${split}" method="post"
-                    action="#" th:action="@{/pdf/split/}">
+                  action="#" th:action="@{/pdf/split/}">
                 <div class="form-group" th:classappend="${#fields.hasErrors('file')} ? has-error : ''">
                     <label class="col-md-3 control-label" for="file">Исходный файл</label>
+
                     <div class="col-md-6">
-                        <input id="file" type="file" th:field="*{file}" th:value="*{file}" />
-                        <span class="help-block" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">File error</span>
+                        <input id="file" type="file" th:field="*{file}" th:value="*{file}"/>
+                        <span class="help-block" th:if="${#fields.hasErrors('file')}"
+                              th:errors="*{file}">File error</span>
                     </div>
                 </div>
                 <div class="form-group" th:classappend="${#fields.hasErrors('pages')} ? has-error : ''">
                     <label class="col-md-3 control-label" for="range">Нужные страницы</label>
+
                     <div class="col-md-6">
-                        <input id="range" class="form-control" th:field="*{pages}" th:value="*{pages}" />
-                        <span class="help-block" th:if="${#fields.hasErrors('pages')}" th:errors="*{pages}">Range error</span>
+                        <input id="range" class="form-control" th:field="*{pages}" th:value="*{pages}"/>
+                        <span class="help-block" th:if="${#fields.hasErrors('pages')}"
+                              th:errors="*{pages}">Range error</span>
+
                         <p class="help-block">Номера страниц или диапазон, например: 2,5-7</p>
                     </div>
                 </div>
@@ -34,15 +39,19 @@
                     <div class="col-md-offset-3 col-md-6">
                         <div class="checkbox">
                             <label for="singleFile">
-                                <input type="checkbox" id="singleFile" th:field="*{singleFile}" th:value="*{singleFile}" /> В один файл
+                                <input type="checkbox" id="singleFile" th:field="*{singleFile}"
+                                       th:value="*{singleFile}"/> В один файл
                             </label>
                         </div>
-                        <p class="help-block">Если отмечено, будет создан новый pdf-файл из указанных страниц. В противном случае - один zip-архив с этими страницами отдельно.</p>
+                        <p class="help-block">Если отмечено, будет создан новый pdf-файл из указанных страниц. В
+                            противном случае - один zip-архив с этими страницами отдельно.</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-3 col-md-4">
-                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-fullscreen"></i> Разбить!</button>
+                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-fullscreen"></i>
+                            Разбить!
+                        </button>
                     </div>
                 </div>
             </form>

@@ -10,7 +10,7 @@ public class ErrController implements ErrorController {
     private static final String errorPath = "/error/";
 
     @RequestMapping(value = errorPath)
-    public String error(){
+    public String error() {
         return "404";
     }
 

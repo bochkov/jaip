@@ -1,6 +1,5 @@
 package com.sergeybochkov.jaip.web;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,22 +14,22 @@ public class WebController {
     }
 
     @RequestMapping("/weather/")
-    public String weather(){
+    public String weather() {
         return "weather";
     }
 
     @RequestMapping("/exchange/")
-    public String exchange(){
+    public String exchange() {
         return "exchange";
     }
 
     @RequestMapping("/news/")
-    public String news(){
+    public String news() {
         return "news";
     }
 
     @RequestMapping("/about/")
-    public String about(){
+    public String about() {
         return "about";
     }
 }

@@ -3,7 +3,6 @@ package com.sergeybochkov.jaip.model.forecast;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ForecastHorly {
 
@@ -12,6 +11,46 @@ public class ForecastHorly {
     private City city;
     private Integer cnt;
     private ArrayList<L> list;
+
+    public String getCod() {
+        return cod;
+    }
+
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+
+    public Double getMessage() {
+        return message;
+    }
+
+    public void setMessage(Double message) {
+        this.message = message;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Integer getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(Integer cnt) {
+        this.cnt = cnt;
+    }
+
+    public ArrayList<L> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<L> list) {
+        this.list = list;
+    }
 
     private class City {
         private Integer id;
@@ -367,45 +406,5 @@ public class ForecastHorly {
         public void setThreeh(Double threeh) {
             this.threeh = threeh;
         }
-    }
-
-    public String getCod() {
-        return cod;
-    }
-
-    public void setCod(String cod) {
-        this.cod = cod;
-    }
-
-    public Double getMessage() {
-        return message;
-    }
-
-    public void setMessage(Double message) {
-        this.message = message;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Integer getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(Integer cnt) {
-        this.cnt = cnt;
-    }
-
-    public ArrayList<L> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<L> list) {
-        this.list = list;
     }
 }

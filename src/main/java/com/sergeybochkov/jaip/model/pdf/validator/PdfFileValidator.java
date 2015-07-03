@@ -20,8 +20,7 @@ public class PdfFileValidator implements ConstraintValidator<PdfFile, MultipartF
             PdfReader reader = new PdfReader(multipartFile.getInputStream());
             reader.getNumberOfPages();
             reader.close();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             return false;
         }
         return true;

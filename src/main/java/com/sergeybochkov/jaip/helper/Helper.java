@@ -25,7 +25,7 @@ public class Helper {
         return null;
     }
 
-    public <T> T doPostJson(String url, String params, Class<T> cl){
+    public <T> T doPostJson(String url, String params, Class<T> cl) {
         Gson gson = new Gson();
         try {
             URLConnection conn = new URL(url).openConnection();
@@ -37,8 +37,9 @@ public class Helper {
             BufferedReader reader = new BufferedReader(new InputStreamReader(response));
 
             return gson.fromJson(reader, cl);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        catch (IOException ex) { ex.printStackTrace(); }
         return null;
     }
 
@@ -49,8 +50,9 @@ public class Helper {
             InputStream response = conn.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(response, "UTF-8"));
             return gson.fromJson(reader, cl);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        catch (IOException ex) { ex.printStackTrace(); }
         return null;
     }
 }

@@ -10,6 +10,46 @@ public class ForecastDaily {
     private Integer cnt;
     private ArrayList<L> list;
 
+    public String getCod() {
+        return cod;
+    }
+
+    public void setCod(String cod) {
+        this.cod = cod;
+    }
+
+    public Double getMessage() {
+        return message;
+    }
+
+    public void setMessage(Double message) {
+        this.message = message;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Integer getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(Integer cnt) {
+        this.cnt = cnt;
+    }
+
+    public ArrayList<L> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<L> list) {
+        this.list = list;
+    }
+
     private class City {
         private Integer id;
         private String name;
@@ -287,45 +327,5 @@ public class ForecastDaily {
         public void setIcon(String icon) {
             this.icon = icon;
         }
-    }
-
-    public String getCod() {
-        return cod;
-    }
-
-    public void setCod(String cod) {
-        this.cod = cod;
-    }
-
-    public Double getMessage() {
-        return message;
-    }
-
-    public void setMessage(Double message) {
-        this.message = message;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public Integer getCnt() {
-        return cnt;
-    }
-
-    public void setCnt(Integer cnt) {
-        this.cnt = cnt;
-    }
-
-    public ArrayList<L> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<L> list) {
-        this.list = list;
     }
 }

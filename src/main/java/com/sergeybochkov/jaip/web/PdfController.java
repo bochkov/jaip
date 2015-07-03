@@ -6,14 +6,10 @@ import com.sergeybochkov.jaip.model.pdf.Split;
 import com.sergeybochkov.jaip.service.PdfService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
@@ -29,12 +25,12 @@ public class PdfController {
     private PdfService pdfService;
 
     @RequestMapping("/")
-    public String pdf(){
+    public String pdf() {
         return "pdf/index";
     }
 
     @RequestMapping(value = "/split/", method = RequestMethod.GET)
-    public String split(Split split){
+    public String split(Split split) {
         return "pdf/split";
     }
 
@@ -56,8 +52,7 @@ public class PdfController {
             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
             is.close();
             new File(spl.getFilename()).delete();
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return "redirect:/pdf/split/";
@@ -82,8 +77,9 @@ public class PdfController {
             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
             is.close();
             new File(mrg.getFilename()).delete();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        catch (IOException ex) { ex.printStackTrace(); }
         return "redirect:/pdf/merge/";
     }
 
@@ -109,15 +105,14 @@ public class PdfController {
                 is.close();
                 new File(cmp.getFilename()).delete();
             }
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
         return "pdf/compress";
     }
 
     @RequestMapping(value = "/help/")
-    public String help(){
+    public String help() {
         return "pdf/help";
     }
 }

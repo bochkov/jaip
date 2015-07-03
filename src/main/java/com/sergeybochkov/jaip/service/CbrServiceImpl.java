@@ -24,7 +24,7 @@ public class CbrServiceImpl implements CbrService {
     /**
      * @return список валют
      */
-    public ArrayList<Valute> getValutes()  {
+    public ArrayList<Valute> getValutes() {
         Integer days = 0;
         String params = "d=" + days;
         Document dom = helper.doGetXml(VALUTES_URL, params);
@@ -94,12 +94,11 @@ public class CbrServiceImpl implements CbrService {
     }
 
     /**
-     *
      * @param valuteId ID валюты
-     * @param days период в днях
+     * @param days     период в днях
      * @return динамика курса валюты за период
      */
-    public ValuteRate getPeriodValuteRate(String valuteId, Integer days){
+    public ValuteRate getPeriodValuteRate(String valuteId, Integer days) {
         Calendar cal = new GregorianCalendar();
         cal.add(Calendar.DAY_OF_MONTH, 1);
         String dateReq2 = dateToString(cal.getTime());
@@ -116,7 +115,7 @@ public class CbrServiceImpl implements CbrService {
         for (int i = 0; i < records.getLength(); ++i) {
             Element record = (Element) records.item(i);
             Date date = stringToDate(record.getAttribute("Date"));
-            Double currentValue = Double.parseDouble(record.getElementsByTagName("Value").item(0).getTextContent().replace(",","."));
+            Double currentValue = Double.parseDouble(record.getElementsByTagName("Value").item(0).getTextContent().replace(",", "."));
             Rate rate = new Rate();
             rate.setCurrentDate(date);
             rate.setCurrentValue(currentValue);
@@ -137,8 +136,9 @@ public class CbrServiceImpl implements CbrService {
         fmt.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
             return fmt.parse(str);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
         }
-        catch (ParseException ex) { ex.printStackTrace(); }
         return null;
     }
 }

@@ -24,6 +24,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Autowired
     private Helper helper;
+    private ArrayList<News> newsFeeds;
 
     private String getText(Element element, String tagName) {
         NodeList list = element.getElementsByTagName(tagName);
@@ -41,17 +42,16 @@ public class NewsServiceImpl implements NewsService {
         return "";
     }
 
-    private Date getDate(Element element, String tagName){
+    private Date getDate(Element element, String tagName) {
         SimpleDateFormat df = new SimpleDateFormat("E, dd MMM y HH:mm:ss Z", Locale.US);
         Date date = null;
         try {
             date = df.parse(getText(element, tagName));
+        } catch (ParseException ex) {
+            ex.printStackTrace();
         }
-        catch (ParseException ex) { ex.printStackTrace(); }
         return date;
     }
-
-    private ArrayList<News> newsFeeds;
 
     @Override
     public List<News> getLatest(String slug) {
@@ -78,8 +78,9 @@ public class NewsServiceImpl implements NewsService {
         for (Thread t : threads)
             try {
                 t.join();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
-            catch (InterruptedException ex) { ex.printStackTrace(); }
 
         return newsFeeds;
     }

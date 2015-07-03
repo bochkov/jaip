@@ -21,6 +21,10 @@ import java.util.zip.ZipOutputStream;
 @Service
 public class PdfServiceImpl implements PdfService {
 
+    private String tmp = System.getProperty("java.io.tmpdir") + File.separator;
+    @Value("${gsbin}")
+    private String gsbin;
+
     private ArrayList<Integer> convert(String pages) {
         ArrayList<Integer> result = new ArrayList<>();
         for (String it : pages.split(",")) {
@@ -30,21 +34,17 @@ public class PdfServiceImpl implements PdfService {
                 if (spl.length == 0) {
                     start = 1;
                     end = 100;
-                }
-                else {
+                } else {
                     start = spl[0].isEmpty() ? 1 : Integer.parseInt(spl[0]);
                     end = spl[spl.length - 1].isEmpty() ? 100 : Integer.parseInt(spl[spl.length - 1]);
                 }
                 for (int i = start; i <= end; ++i)
                     result.add(i);
-            }
-            else
+            } else
                 result.add(Integer.parseInt(it));
         }
         return result;
     }
-
-    private String tmp = System.getProperty("java.io.tmpdir") + File.separator;
 
     private String processToFile(MultipartFile file, ArrayList<Integer> pages) {
         String filename = tmp + file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-splitted.pdf";
@@ -68,8 +68,7 @@ public class PdfServiceImpl implements PdfService {
             out.flush();
             doc.close();
             out.close();
-        }
-        catch (IOException | DocumentException ex) {
+        } catch (IOException | DocumentException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -102,8 +101,7 @@ public class PdfServiceImpl implements PdfService {
             }
             out.flush();
             out.close();
-        }
-        catch (IOException | DocumentException ex) {
+        } catch (IOException | DocumentException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -146,8 +144,7 @@ public class PdfServiceImpl implements PdfService {
                 reader.close();
             }
             doc.close();
-        }
-        catch (IOException | DocumentException ex) {
+        } catch (IOException | DocumentException ex) {
             ex.printStackTrace();
             merge.setSuccess(false);
             return merge;
@@ -156,9 +153,6 @@ public class PdfServiceImpl implements PdfService {
         merge.setFilename(filename);
         return merge;
     }
-
-    @Value("${gsbin}")
-    private String gsbin;
 
     @Override
     public Compress compress(MultipartFile file) {
@@ -178,24 +172,25 @@ public class PdfServiceImpl implements PdfService {
             out.write(bytes);
             out.close();
 
-            String[] cmd = { gsbin, quiet, device, settings, nopause, batch, output, origFile.getAbsolutePath() };
+            String[] cmd = {gsbin, quiet, device, settings, nopause, batch, output, origFile.getAbsolutePath()};
             Process p = Runtime.getRuntime().exec(cmd);
             try {
                 p.waitFor();
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
             }
-            catch (InterruptedException ex) { ex.printStackTrace(); }
 
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
-        catch (IOException ex) { ex.printStackTrace(); }
 
         Compress compress = new Compress();
-        Double rate = 1 - (double)compFile.length() / origFile.length();
+        Double rate = 1 - (double) compFile.length() / origFile.length();
         if (rate >= 0.05) {
             compress.setSuccess(true);
             compress.setFilename(compFile.getPath());
             compress.setComressRate(rate);
-        }
-        else {
+        } else {
             compress.setSuccess(false);
             compress.setMessage("File cannot be compressed");
             compFile.delete();
