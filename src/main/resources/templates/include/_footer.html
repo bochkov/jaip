@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<div th:fragment="footer">
+    <div id="footer">
+        <div class="container-narrow">
+            <div class="row">
+                <div class="col-md-3">
+                    <ul class="list-unstyled">
+                        <li><a href="#" th:href="@{/about/}">О нас</a></li>
+                        <li><a href="#" th:href="@{/pdf/help/}">Справка pdf tool</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-3">
+                    <p>&copy; Бочков Сергей 2014</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="#" th:src="@{/static/js/jquery.min.js}"></script>
+    <script src="#" th:src="@{/static/js/bootstrap.min.js}"></script>
+
+    <script src="#" th:src="@{/static/js/angular.min.js}"></script>
+    <script src="#" th:src="@{/static/js/angular-locale_ru-ru.js}"></script>
+
+    <script src="#" th:src="@{/static/js/highcharts.js}"></script>
+    <script src="#" th:src="@{/static/js/highcharts-more.js}"></script>
+    <script src="#" th:src="@{/static/js/grid-light.js}"></script>
+
+    <script src="#" th:src="@{/static/js/charts.js}"></script>
+    <script src="#" th:src="@{/static/js/script.js}"></script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function() {
+                try {
+                    w.yaCounter24268888 = new Ya.Metrika({id:24268888,
+                        webvisor:true,
+                        clickmap:true,
+                        trackLinks:true,
+                        accurateTrackBounce:true});
+                } catch(e) { }
+            });
+
+            var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () { n.parentNode.insertBefore(s, n); };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else { f(); }
+        })(document, window, "yandex_metrika_callbacks");
+    </script>
+    <noscript><div><img src="//mc.yandex.ru/watch/24268888" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+</div>
+
+</body>
+</html>

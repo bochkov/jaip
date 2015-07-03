@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<div th:fragment="weather">
+    <h4>
+        <a href="#" th:href="@{/weather/}">Погода в городе {{ city }}</a>
+        <small><span class="btn-link" id="refresh-weather" ng-click="get_weather()">
+            <i class="glyphicon glyphicon-refresh pull-right" ng-class="{'animate-spin': weather_animate_spin}"></i>
+        </span></small>
+    </h4>
+
+    <p style='font-size: 5em; line-height: 1.5em'>
+        <abbr class="no-border" title="{{weather.weather[0].description}}"><i class='icon-{{ weather.weather[0].icon }}'></i></abbr>
+        &nbsp;{{ weather.main.temp | number: 1 }} &deg;C
+    </p>
+
+    <ul class="list-unstyled">
+        <li><strong>Состояние</strong> {{ weather.weather[0].description }}</li>
+        <li><strong>Влажность</strong> {{ weather.main.humidity }} %</li>
+        <li><strong>Атмосферное давление</strong> {{ weather.main.pressure }} гПа ({{ weather.main.pressure | to_mmHg | number:0 }} мм рт. ст.)</li>
+        <li><strong>Ветер</strong> {{ weather.wind.deg | wind_direction }}
+            {{ weather.wind.speed }} м/с</li>
+    </ul>
+    <ul class="list-unstyled">
+        <li><strong>Восход</strong> {{ weather.sys.sunrise * 1000 | date :"HH:mm" }}</li>
+        <li><strong>Закат</strong> {{ weather.sys.sunset * 1000 | date : "HH:mm" }}</li>
+    </ul>
+
+    <table class="table table-weather">
+        <caption><h4>Прогноз погоды</h4></caption>
+        <tr>
+            <th rowspan="2">Дата</th>
+            <th rowspan="2">Состояние</th>
+            <th colspan="2">Температура, &deg;C</th>
+        </tr>
+        <tr>
+            <th>Ночью</th>
+            <th>Днем</th>
+        </tr>
+        <tr ng-repeat="f in forecast.list | limitTo:3">
+            <td>{{ f.dt * 1000 | date :"EEEE" }}<br/><small>{{ f.dt * 1000 | date : 'd MMMM yyyy' }}</small></td>
+            <td><p style='font-size: 1.5em'>
+                <abbr class="no-border" title="{{ f.weather[0].description }}"><span class="icon-{{ f.weather[0].icon }}"></span></abbr>
+            </p></td>
+            <td>{{ f.temp.min | number:1 }}</td>
+            <td>{{ f.temp.max | number:1 }}</td>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/_header::header"></head>
+<body>
+
+<div id="wrap">
+    <div class="container-narrow">
+
+        <div th:replace="include/_menu::menu"></div>
+
+        <div th:replace="pdf/include/_title :: title"></div>
+
+        <hr/>
+
+        <div class="row" id="content">
+            <form class="form form-horizontal" method="post" enctype="multipart/form-data" id="form-upload" th:object="${compress}">
+                <div class="form-group" th:classappend="${#fields.hasErrors('file')} ? has-error : ''">
+                    <label for="file" class="col-md-3 control-label">Исходный файл</label>
+                    <div class="col-md-6">
+                        <input type="file" id="file" th:field="*{file}" />
+                        <span class="help-block" th:if="${#fields.hasErrors('file')}" th:errors="*{file}">File error</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-4">
+                        <button type="submit" class="btn btn-warning" id="upload"><i class="glyphicon glyphicon-resize-small"></i> Сжать!</button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="alert alert-warning hide" id="alert"></div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="include/_footer :: footer"></div>
+
+</body>
+</html>

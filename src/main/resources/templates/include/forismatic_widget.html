@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<div th:fragment="forismatic">
+    <h4>Цитата дня
+        <small>
+            <abbr title="Мне не нравится, подать другую">
+                <span class="btn-link" ng-click="get_forismatic()">
+                    <i class="glyphicon glyphicon-refresh pull-right" ng-class="{'animate-spin': forismatic_animate_spin}"></i>
+                </span>
+            </abbr>
+        </small>
+    </h4>
+    <blockquote class='pull-right'>
+        <p>{{ forismatic.quoteText }}</p>
+        <small ng-if="forismatic.quoteAuthor">{{ forismatic.quoteAuthor }}</small>
+    </blockquote>
+</div>
+
+</body>
+</html>

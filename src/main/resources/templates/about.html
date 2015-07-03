@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/_header::header"></head>
+<body>
+
+<div id="wrap">
+    <div class="container-narrow">
+
+        <div th:replace="include/_menu::menu"></div>
+
+        <div class="page-title">
+            <h1>about this site</h1>
+            <h6 class="text-muted">сделано на коленке</h6>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+            <div class="col-md-3">
+                <img src="#" th:src="@{/static/img/index/1.png}" />
+            </div>
+            <div class="col-md-9">
+                В главный ролях:
+                <ul class="list muted">
+                    <li>Язык Java и фреймворк <a href="http://spring.io">Spring</a> </li>
+                    <li>Фреймворк <a href="http://getbootstrap.com">Bootstrap</a> </li>
+                    <li>Фреймворк <a href="https://angularjs.org/">AngularJS</a></li>
+                    <li>Цитата дня от <a href="http://forismatic.com/">forismatic</a> и его <a href="http://forismatic.com/ru/api/">API</a> </li>
+                    <li>Прогноз погоды от <a href="http://openweathermap.com/">open weather map</a> и его <a href="http://openweathermap.org/API">API</a> </li>
+                    <li>Курс валют от <a href="http://cbr.ru/">ЦБ РФ</a></li>
+                    <li>Графики от <a href="http://www.highcharts.com/">Highcharts</a></li>
+                </ul>
+
+                <p><strong>Почему колба?</strong> Потому что мы, у себя в лаборатории, <abbr title="от слова &laquo;Творчество&raquo;">творим</abbr> что хотим.</p>
+                <p><strong>Вопрос или предложение?</strong> <a href="mailto:bochkovsa@gmail.com">Сюда</a> </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="include/_footer :: footer"></div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/_header::header"></head>
+<body ng-app="myApp">
+
+<div id="wrap">
+    <div class="container-narrow">
+
+        <div th:replace="include/_menu::menu"></div>
+
+        <div class="page-title">
+            <h1>Курсы валют</h1>
+        </div>
+
+        <hr/>
+
+        <div class="row" id="content" ng-controller="ExchangeController" ng-init="get_rates()">
+            <div class="hc-date-chart" id="dollar" chart-title="USD to RUR" chart-color="0"
+                 chart-data="dollar.data"></div>
+            <div class="hc-date-chart" id="euro" chart-title="EUR to RUR" chart-color="1"
+                 chart-data="euro.data"></div>
+            <div class="hc-date-chart" id="pound" chart-title="GBP to RUR" chart-color="2"
+                 chart-data="pound.data"></div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="include/_footer :: footer"></div>
+
+</body>
+</html>

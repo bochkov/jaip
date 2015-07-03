@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/_header::header"></head>
+<body ng-app="myApp">
+
+<div id="wrap" ng-controller="WeatherController" ng-init="get_weather()">
+    <div class="container-narrow">
+
+        <div th:replace="include/_menu::menu"></div>
+
+        <div class="page-title">
+            <div class="row">
+                <form ng-submit="get_weather()">
+                <h1>Погода в городе
+                    <label for="city"></label>
+                    <input style="border: none" name="city" ng-model="city" id="city"/>
+                </h1>
+                </form>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row" id="content">
+            <div style="font-size: 5em; text-align: center">
+                <abbr class="no-border" title="{{ weather.weather[0].main }}">
+                    <i class="icon-{{ weather.weather[0].icon }}"></i>
+                </abbr>
+                {{ weather.main.temp| number:2 }} &deg;C
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-md-4">
+                <dl>
+                    <dt>Влажность</dt><dd>{{ weather.main.humidity }} %</dd>
+                    <dt>Атмосферное давление</dt><dd>{{ weather.main.pressure }} гПа ({{ weather.main.pressure|to_mmHg|number:2 }} мм рт. ст.)</dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <dl>
+                    <dt>Скорость ветра</dt><dd>{{ weather.wind.speed }} м/с</dd>
+                    <dt>Направление ветра</dt><dd>{{ weather.wind.deg|wind_direction }} {{ weather.wind.deg }}&deg;</dd>
+                </dl>
+            </div>
+            <div class="col-md-4">
+                <dl>
+                    <dt>Восход</dt><dd>{{ weather.sys.sunrise * 1000 | date:"HH:mm" }}</dd>
+                    <dt>Закат</dt><dd>{{ weather.sys.sunset * 1000 | date:"HH:mm" }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div id="map" style="display: block; width: 100%; height: 500px;"></div>
+
+        <h1>Почасовой прогноз погоды</h1>
+        <table class="table table-weather">
+            <tr>
+                <th>Дата</th>
+                <th>Состояние</th>
+                <th>Температура, &deg;C</th>
+                <th>Влажность, %</th>
+                <th>Атмосферное давление, гПа</th>
+                <th>Ветер</th>
+            </tr>
+            <tr ng-repeat="h in forecast_hourly.list | limitTo:9 ">
+                <td>{{ h.dt * 1000 | date:"dd MMMM, HH:mm" }}</td>
+                <td><abbr class="no-border" title="{{ h.weather[0].main }}"><i class="icon-{{ h.weather[0].icon }}"></i></abbr></td>
+                <td>{{ h.main.temp|number:1 }}</td>
+                <td>{{ h.main.humidity }}</td>
+                <td>{{ h.main.pressure|number:1 }}</td>
+                <td>{{ h.wind.deg|wind_direction }}<br/>{{ h.wind.speed|number:1 }} м/с</td>
+            </tr>
+        </table>
+
+        <div id="temp" class="hc-weather-chart" chart-title="Температура воздуха, &deg;C"
+             chart-color="0" chart-data="hourly.temp" chart-tooltip="Температура" chart-value-suffix=" &deg;C"></div>
+        <div id="humidity" class="hc-weather-chart" chart-title="Влажность воздуха, %"
+                chart-color="1" chart-data="hourly.humidity" chart-tooltip="Влажность" chart-value-suffix=" %"></div>
+        <div id="pressure" class="hc-weather-chart" chart-title="Атмосферное давление, гПа"
+                chart-color="2" chart-data="hourly.pressure" chart-tooltip="Давление" chart-value-suffix=" гПа"></div>
+
+        <h1>Прогноз погоды на 14 дней</h1>
+        <table class="table table-weather">
+            <tr>
+                <th rowspan="2">Дата</th>
+                <th rowspan="2">Состояние</th>
+                <th colspan="2">Температура, &deg;C</th>
+                <th rowspan="2">Влажность, %</th>
+                <th rowspan="2">Атмосферное давление, гПа</th>
+                <th rowspan="2">Ветер</th>
+            </tr>
+            <tr>
+                <th>Ночью</th>
+                <th>Днем</th>
+            </tr>
+            <tr ng-repeat="d in forecast.list">
+                <td>{{ d.dt * 1000 |date:"EEEE" }}<br/>{{ d.dt * 1000 |date:"d MMMM" }}</td>
+                <td><abbr class="no-border" title="{{ d.weather[0].main }}"><i class="icon-{{ d.weather[0].icon }}"></i></abbr></td>
+                <td>{{ d.temp.min|number:1 }}</td>
+                <td>{{ d.temp.max|number:1 }}</td>
+                <td><span ng-if="d.humidity">{{d.humidity}}</span></td>
+                <td>{{ d.pressure|number:1 }}</td>
+                <td>{{ d.deg|wind_direction }}<br/>{{ d.speed|number:1 }} м/с</td>
+            </tr>
+        </table>
+
+        <div id="temp-daily" class="hc-average-chart" chart-data-ranges="daily.ranges" chart-data-averages="daily.averages"
+                chart-title="Температура, °C" chart-tooltip="Средняя температура"></div>
+        <div id="rain-daily" class="hc-column-chart" chart-title="Осадки, мм" chart-value-suffix=" мм"
+                chart-name1="Дождь" chart-data1="daily.rain" chart-name2="Снег" chart-data2="daily.snow"></div>
+
+    </div>
+</div>
+
+<div th:replace="include/_footer :: footer"></div>
+
+<script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&amp;lang=ru-RU" type="text/javascript"></script>
+
+</body>
+</html>

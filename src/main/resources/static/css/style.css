@@ -1,0 +1,272 @@
+
+html, body {
+    height: 100%;
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -80px;
+    padding: 0 0 100px;
+}
+
+#footer {
+    height: 80px;
+    background-color: #f5f5f5;
+    padding: 20px 0;
+}
+
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container-narrow {
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+.page-title {
+    margin: 30px 0;
+    text-align: center;
+}
+
+.page-title h1 {
+    font-size: 4em;
+    line-height: 1;
+}
+
+.page-title .btn .btn-big {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.content {
+    margin: 60px 0;
+}
+
+.content p + h4 {
+    margin-top: 28px;
+}
+
+abbr.no-border {
+    border-bottom: none;
+}
+
+.charts {
+    padding: 2em 0;
+}
+
+img.thumbnail {
+    margin: 1em 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+#exchange, #weather, #forismatic {
+    padding: 15px;
+}
+
+.table-weather td, .table-weather th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+#city {
+    text-align: center;
+}
+
+.news-item {
+    margin-top: 2em;
+    text-align: justify;
+}
+
+a#logo img {
+    border: 0;
+    outline: 0;
+}
+
+#scroller {
+    display: none;
+    font-size: 4em;
+    position:fixed;
+    left: 10%;
+    bottom: 10%;
+    color: gray;
+}
+
+.text-weekend {
+    color: #ff5f38;
+}
+
+#upload-progress {
+    width: 50%;
+    text-align: center;
+}
+
+.table-no-border > tbody > tr > td {
+    border-top: 0;
+}
+
+/*
+   Animation example, for spinners
+*/
+.animate-spin {
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  -webkit-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+  display: inline-block;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+@font-face {
+  font-family: 'fontello';
+  src: url('../fonts/fontello.eot?41508586');
+  src: url('../fonts/fontello.eot?41508586#iefix') format('embedded-opentype'),
+       url('../fonts/fontello.woff?41508586') format('woff'),
+       url('../fonts/fontello.ttf?41508586') format('truetype'),
+       url('../fonts/fontello.svg?41508586#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?41508586#fontello') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  font-size: 120%;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+ }
+
+.icon-13n:before { content: '\e80f'; } /* '' */
+.icon-04d:before { content: '\e806'; } /* '' */
+.icon-03n:before { content: '\e805'; } /* '' */
+.icon-11n:before { content: '\e80c'; } /* '' */
+.icon-09n:before { content: '\e809'; } /* '' */
+.icon-10n:before { content: '\e80b'; } /* '' */
+.icon-01d:before { content: '\e800'; } /* '' */
+.icon-01n:before { content: '\e801'; } /* '' */
+.icon-04n:before { content: '\e807'; } /* '' */
+.icon-02n:before { content: '\e803'; } /* '' */
+.icon-50d:before { content: '\e810'; } /* '' */
+.icon-03d:before { content: '\e804'; } /* '' */
+.icon-11d:before { content: '\e80d'; } /* '' */
+.icon-09d:before { content: '\e808'; } /* '' */
+.icon-10d:before { content: '\e80a'; } /* '' */
+.icon-13d:before { content: '\e80e'; } /* '' */
+.icon-02d:before { content: '\e802'; } /* '' */
