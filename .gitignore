@@ -2,3 +2,4 @@
 target/
 *.iml
 *.pdf
+.DS_Store
