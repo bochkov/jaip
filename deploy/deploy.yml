@@ -2,7 +2,7 @@
 - hosts: 127.0.0.1
   tasks:
     - file: path=/tmp/jaip-deploy state=directory
-    - copy: src=../target/jaip-1.0.jar dest=/tmp/jaip-deploy/jaip-1.0.jar
+    - copy: src=../target/jaip-1.1.RELEASE.jar dest=/tmp/jaip-deploy/jaip.jar
     - copy: src=Dockerfile dest=/tmp/jaip-deploy/Dockerfile
 
     - name: stop and delete obsolete containers
