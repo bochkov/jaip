@@ -5,6 +5,7 @@ import com.sergeybochkov.jaip.helper.Settings;
 import com.sergeybochkov.jaip.model.forecast.ForecastDaily;
 import com.sergeybochkov.jaip.model.forecast.ForecastHorly;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,29 +14,40 @@ public class ForecastServiceImpl implements ForecastService {
     @Autowired
     private Helper helper;
 
+    @Value("${openweather.api.key}")
+    private String API_KEY;
+
     @Override
-    public ForecastHorly get() {
-        return get(Settings.DEFAULT_CITY);
+    public ForecastHorly hourly() {
+        return hourly(Settings.DEFAULT_CITY);
     }
 
     @Override
-    public ForecastHorly get(String city) {
+    public ForecastHorly hourly(String city) {
         String units = "metric";
-        Integer cnt = 5;
-        String params = "q=" + city + "&units=" + units + "&lang=" + Settings.DEFAULT_LANG + "&cnt=" + cnt;
+        Integer cnt = 15;
+        String params = "q=" + city +
+                "&units=" + units +
+                "&lang=" + Settings.DEFAULT_LANG +
+                "&cnt=" + cnt +
+                "&APPID=" + API_KEY;
         return helper.doGetJson(FORECAST_URL, params, ForecastHorly.class);
     }
 
     @Override
-    public ForecastDaily getDaily() {
-        return getDaily(Settings.DEFAULT_CITY);
+    public ForecastDaily daily() {
+        return daily(Settings.DEFAULT_CITY);
     }
 
     @Override
-    public ForecastDaily getDaily(String city) {
+    public ForecastDaily daily(String city) {
         String units = "metric";
-        Integer cnt = 14;
-        String params = "q=" + city + "&units=" + units + "&lang=" + Settings.DEFAULT_LANG + "&cnt=" + cnt;
+        Integer cnt = 15;
+        String params = "q=" + city +
+                "&units=" + units +
+                "&lang=" + Settings.DEFAULT_LANG +
+                "&cnt=" + cnt +
+                "&APPID=" + API_KEY;
         return helper.doGetJson(FORECAST_URL_DAILY, params, ForecastDaily.class);
     }
 

@@ -5,14 +5,14 @@ import com.sergeybochkov.jaip.model.forecast.ForecastHorly;
 
 public interface ForecastService {
 
-    public static final String FORECAST_URL_DAILY = "http://api.openweathermap.org/data/2.5/forecast/daily";
-    public static final String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
+    String FORECAST_URL_DAILY = "http://api.openweathermap.org/data/2.5/forecast/daily";
+    String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast";
 
-    public ForecastHorly get();
+    ForecastHorly hourly();
 
-    public ForecastHorly get(String city);
+    ForecastHorly hourly(String city);
 
-    public ForecastDaily getDaily();
+    ForecastDaily daily();
 
-    public ForecastDaily getDaily(String city);
+    ForecastDaily daily(String city);
 }
