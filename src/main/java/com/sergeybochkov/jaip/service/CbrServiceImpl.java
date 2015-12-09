@@ -84,7 +84,7 @@ public class CbrServiceImpl implements CbrService {
         rate.setPreviousValue(previousValue);
         rate.setPreviousDate(previousDate);
         rate.setNominal(nominal);
-        valuteRate.setRates(Arrays.asList(rate));
+        valuteRate.setRates(Collections.singletonList(rate));
 
         return valuteRate;
     }

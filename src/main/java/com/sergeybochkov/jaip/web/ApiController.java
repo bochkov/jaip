@@ -39,103 +39,89 @@ public class ApiController {
     private PdfService pdfService;
 
     @RequestMapping("/forismatic/")
-    public
     @ResponseBody
-    Cite forismatic() {
+    public Cite forismatic() {
         return citeService.get();
     }
 
     @RequestMapping("/weather/")
-    public
     @ResponseBody
-    Weather weather() {
+    public Weather weather() {
         return weatherService.get();
     }
 
     @RequestMapping("/weather/{city}/")
-    public
     @ResponseBody
-    Weather weather(@PathVariable String city) {
+    public Weather weather(@PathVariable String city) {
         return weatherService.get(city);
     }
 
     @RequestMapping("/forecast/")
-    public
     @ResponseBody
-    ForecastHorly forecast() {
-        return forecastService.get();
+    public ForecastHorly forecast() {
+        return forecastService.hourly();
     }
 
     @RequestMapping("/forecast/{city}/")
-    public
     @ResponseBody
-    ForecastHorly forecast(@PathVariable String city) {
-        return forecastService.get(city);
+    public ForecastHorly forecast(@PathVariable String city) {
+        return forecastService.hourly(city);
     }
 
     @RequestMapping("/forecast/daily/")
-    public
     @ResponseBody
-    ForecastDaily forecastDaily() {
-        return forecastService.getDaily();
+    public ForecastDaily forecastDaily() {
+        return forecastService.daily();
     }
 
     @RequestMapping("/forecast/daily/{city}/")
-    public
     @ResponseBody
-    ForecastDaily forecastDaily(@PathVariable String city) {
-        return forecastService.getDaily(city);
+    public ForecastDaily forecastDaily(@PathVariable String city) {
+        return forecastService.daily(city);
     }
 
     @RequestMapping("/cbr/valutes/")
-    public
     @ResponseBody
-    List<Valute> valutes() {
+    public List<Valute> valutes() {
         return cbrService.getValutes();
     }
 
     @RequestMapping("/cbr/rate/{valuteId}/")
-    public
     @ResponseBody
-    ValuteRate valuteRate(@PathVariable String valuteId) {
+    public ValuteRate valuteRate(@PathVariable String valuteId) {
         return cbrService.getValuteRate(valuteId);
     }
 
     @RequestMapping("/cbr/rates/{valuteId}/")
-    public
     @ResponseBody
-    ValuteRate periodValuteRates(@PathVariable String valuteId) {
+    public ValuteRate periodValuteRates(@PathVariable String valuteId) {
         return cbrService.getPeriodValuteRate(valuteId);
     }
 
     @RequestMapping("/news/{slug}/")
-    public
     @ResponseBody
-    List<News> news(@PathVariable String slug) {
+    public List<News> news(@PathVariable String slug) {
         return newsService.getLatest(slug);
     }
 
     // curl http://127.0.0.1:8080/pdf/split/ -F "file=@...pdf" -F "pages=1,3" -F "singleFile=true"
     @RequestMapping(value = "/pdf/split/", method = RequestMethod.POST)
-    public
     @ResponseBody
-    Split split(@Valid Split split) {
+    public Split split(@Valid Split split) {
         return pdfService.split(split.getFile(), split.getPages(), split.getSingleFile());
     }
 
     // curl http://127.0.0.1:8080/pdf/merge/ -F "files=@1.pdf" -F "files=@3.pdf"
     @RequestMapping(value = "/pdf/merge/", method = RequestMethod.POST)
-    public
     @ResponseBody
-    Merge merge(@Valid Merge merge) {
+    public Merge merge(@Valid Merge merge) {
         return pdfService.merge(merge.getFiles());
     }
 
     // curl http://127.0.0.1:8080/pdf/compress/ -F "file=@20141107.pdf"
     @RequestMapping(value = "/pdf/compress/", method = RequestMethod.POST)
-    public
     @ResponseBody
-    Compress compress(@Valid Compress compress) {
+    public Compress compress(@Valid Compress compress) {
         return pdfService.compress(compress.getFile());
     }
 }

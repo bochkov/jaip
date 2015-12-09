@@ -18,8 +18,8 @@
         </small>
     </h4>
     <blockquote class='pull-right'>
-        <p>{{ forismatic.quoteText }}</p>
-        <small ng-if="forismatic.quoteAuthor">{{ forismatic.quoteAuthor }}</small>
+        <p ng-bind="forismatic.quoteText"></p>
+        <small ng-if="forismatic.quoteAuthor" ng-bind="forismatic.quoteAuthor"></small>
     </blockquote>
 </div>
 
