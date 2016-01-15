@@ -11,12 +11,14 @@ public class CiteServiceImpl implements CiteService {
 
     @Autowired
     private Helper helper;
+    @Autowired
+    private Settings settings;
 
     @Override
     public Cite get() {
         String method = "getQuote";
         String format = "json";
-        String query = "method=" + method + "&format=" + format + "&lang=" + Settings.DEFAULT_LANG;
+        String query = "method=" + method + "&format=" + format + "&lang=" + settings.getDefaultLang();
         return helper.doGetJson(FORISMATIC_API_URL, query, Cite.class);
     }
 }
