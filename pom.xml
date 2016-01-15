@@ -5,7 +5,7 @@
 
     <groupId>com.sergeybochkov</groupId>
     <artifactId>jaip</artifactId>
-    <version>1.1.RELEASE</version>
+    <version>1.2.RELEASE</version>
     <packaging>jar</packaging>
 
     <name>jaip</name>
@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.2.6.RELEASE</version>
+        <version>1.3.1.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -38,21 +38,15 @@
             <version>2.3</version>
         </dependency>
         <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
     </dependencies>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <start-class>com.sergeybochkov.jaip.Application</start-class>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <build>

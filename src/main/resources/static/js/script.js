@@ -146,8 +146,6 @@ myApp
             })
         }
     })
-    .controller("PdfController", function($scope){
-    })
     .controller('ImageController', function($scope){
         $scope.path = "";
         $scope.random_image = function(count, path) {

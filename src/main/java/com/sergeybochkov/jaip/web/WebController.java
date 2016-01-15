@@ -23,11 +23,6 @@ public class WebController {
         return "exchange";
     }
 
-    @RequestMapping("/news/")
-    public String news() {
-        return "news";
-    }
-
     @RequestMapping("/about/")
     public String about() {
         return "about";

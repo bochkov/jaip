@@ -12,13 +12,12 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Autowired
     private Helper helper;
-
-    @Value("${openweather.api.key}")
-    private String API_KEY;
+    @Autowired
+    private Settings settings;
 
     @Override
     public Weather get() {
-        return get(Settings.DEFAULT_CITY);
+        return get(settings.getDefaultCity());
     }
 
     @Override
@@ -26,8 +25,8 @@ public class WeatherServiceImpl implements WeatherService {
         String units = "metric";
         String params = "q=" + city +
                 "&units=" + units +
-                "&lang=" + Settings.DEFAULT_LANG +
-                "&APPID=" + API_KEY;
+                "&lang=" + settings.getDefaultLang() +
+                "&APPID=" + settings.getOpenweatherApiKey();
         return helper.doGetJson(WEATHER_URL, params, Weather.class);
     }
 }
