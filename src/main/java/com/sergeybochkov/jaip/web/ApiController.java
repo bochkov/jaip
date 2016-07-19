@@ -22,14 +22,18 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
+    private final CiteService citeService;
+    private final WeatherService weatherService;
+    private final ForecastService forecastService;
+    private final CbrService cbrService;
+
     @Autowired
-    private CiteService citeService;
-    @Autowired
-    private WeatherService weatherService;
-    @Autowired
-    private ForecastService forecastService;
-    @Autowired
-    private CbrService cbrService;
+    public ApiController(CiteService citeService, CbrService cbrService, WeatherService weatherService, ForecastService forecastService) {
+        this.citeService = citeService;
+        this.cbrService = cbrService;
+        this.weatherService = weatherService;
+        this.forecastService = forecastService;
+    }
 
     @RequestMapping("/forismatic/")
     @ResponseBody

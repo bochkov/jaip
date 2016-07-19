@@ -2,36 +2,36 @@
 - hosts: 127.0.0.1
   tasks:
     - file: path=/tmp/jaip-deploy state=directory
-    - copy: src=../target/jaip-1.2.RELEASE.jar dest=/tmp/jaip-deploy/jaip.jar
+    - copy: src=../target/jaip-1.2.1.RELEASE.jar dest=/tmp/jaip-deploy/jaip.jar
     - copy: src=Dockerfile dest=/tmp/jaip-deploy/Dockerfile
 
     - name: stop and delete obsolete containers
       docker:
-        image: sb/jaip
+        image: sb-jaip
         name: jaip
         state: absent
 
     - name: delete docker image
       docker_image:
         path: /tmp/jaip-deploy
-        name: sb/jaip
+        name: sb-jaip
         state: absent
     
     - name: build docker image
       docker_image:
         path: /tmp/jaip-deploy
-        name: sb/jaip
-        state: build
+        name: sb-jaip
+        state: present
+        pull: no
 
     - name: app container
       docker:
         name: jaip
-        image: sb/jaip
+        image: sb-jaip
         restart_policy: always
         state: running
-        expose: 8080 
-        ports: 8281:8080
 
-  
     - name: clean
-      shell: rm -rf /tmp/jaip-deploy
+      file:
+        state: absent
+        path: /tmp/jaip-deploy

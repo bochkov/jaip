@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ForecastServiceImpl implements ForecastService {
 
+    private final Helper helper;
+    private final Settings settings;
+
     @Autowired
-    private Helper helper;
-    @Autowired
-    private Settings settings;
+    public ForecastServiceImpl(Helper helper, Settings settings) {
+        this.helper = helper;
+        this.settings = settings;
+    }
 
     @Override
     public ForecastHorly hourly() {

@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class WeatherServiceImpl implements WeatherService {
 
+    private final Helper helper;
+    private final Settings settings;
+
     @Autowired
-    private Helper helper;
-    @Autowired
-    private Settings settings;
+    public WeatherServiceImpl(Settings settings, Helper helper) {
+        this.settings = settings;
+        this.helper = helper;
+    }
 
     @Override
     public Weather get() {

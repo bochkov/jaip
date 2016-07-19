@@ -18,8 +18,12 @@ import java.util.*;
 @Service
 public class CbrServiceImpl implements CbrService {
 
+    private final Helper helper;
+
     @Autowired
-    private Helper helper;
+    public CbrServiceImpl(Helper helper) {
+        this.helper = helper;
+    }
 
     /**
      * @return список валют

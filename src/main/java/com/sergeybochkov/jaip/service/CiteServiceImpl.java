@@ -9,10 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CiteServiceImpl implements CiteService {
 
+    private final Helper helper;
+    private final Settings settings;
+
     @Autowired
-    private Helper helper;
-    @Autowired
-    private Settings settings;
+    public CiteServiceImpl(Settings settings, Helper helper) {
+        this.settings = settings;
+        this.helper = helper;
+    }
 
     @Override
     public Cite get() {
