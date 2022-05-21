@@ -1,36 +1,41 @@
 package com.sergeybochkov.jaip.service;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.pdf.PdfContentByte;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.sergeybochkov.jaip.model.pdf.Compress;
 import com.sergeybochkov.jaip.model.pdf.Merge;
 import com.sergeybochkov.jaip.model.pdf.Split;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
+@Slf4j
 @Service
-public class PdfServiceImpl implements PdfService {
+public final class PdfServiceImpl implements PdfService {
 
-    private String tmp = System.getProperty("java.io.tmpdir") + File.separator;
+    private static final String TMP_DIR = System.getProperty("java.io.tmpdir") + File.separator;
+
     @Value("${gsbin}")
     private String gsbin;
 
-    private ArrayList<Integer> convert(String pages) {
-        ArrayList<Integer> result = new ArrayList<>();
+    private List<Integer> convert(String pages) {
+        List<Integer> result = new ArrayList<>();
         for (String it : pages.split(",")) {
             if (it.contains("-")) {
                 String[] spl = it.split("-");
-                int start, end;
+                int start;
+                int end;
                 if (spl.length == 0) {
                     start = 1;
                     end = 100;
@@ -46,10 +51,13 @@ public class PdfServiceImpl implements PdfService {
         return result;
     }
 
-    private String processToFile(MultipartFile file, ArrayList<Integer> pages) {
-        String filename = tmp + file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-splitted.pdf";
-        Document doc = new Document();
+    private String processToFile(MultipartFile file, List<Integer> pages) {
         try {
+            String originalName = file.getOriginalFilename();
+            if (originalName == null)
+                throw new IOException("origin name is null");
+            String filename = TMP_DIR + originalName.substring(0, originalName.lastIndexOf(".")) + "-splitted.pdf";
+            Document doc = new Document();
             PdfReader sourcePdf = new PdfReader(file.getInputStream());
             OutputStream out = new FileOutputStream(filename);
             PdfWriter writer = PdfWriter.getInstance(doc, out);
@@ -68,50 +76,51 @@ public class PdfServiceImpl implements PdfService {
             out.flush();
             doc.close();
             out.close();
+            return filename;
         } catch (IOException | DocumentException ex) {
-            ex.printStackTrace();
+            LOG.warn(ex.getMessage(), ex);
             return null;
         }
-        return filename;
     }
 
-    private String processToZip(MultipartFile file, ArrayList<Integer> pages) {
-        String filename = tmp + file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-splitted.zip";
+    private String processToZip(MultipartFile file, List<Integer> pages) {
         try {
+            String originalName = file.getOriginalFilename();
+            if (originalName == null)
+                throw new IOException("origin name is null");
+            String filename = TMP_DIR + originalName.substring(0, originalName.lastIndexOf(".")) + "-splitted.zip";
             PdfReader sourcePdf = new PdfReader(file.getInputStream());
-            ZipOutputStream out = new ZipOutputStream(new FileOutputStream(filename));
+            try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(filename))) {
+                for (Integer num : pages) {
+                    if (num > sourcePdf.getNumberOfPages())
+                        break;
+                    ZipEntry entry = new ZipEntry(num + ".pdf");
+                    out.putNextEntry(entry);
 
-            for (Integer num : pages) {
-                if (num > sourcePdf.getNumberOfPages())
-                    break;
-                ZipEntry entry = new ZipEntry(num + ".pdf");
-                out.putNextEntry(entry);
+                    Document doc = new Document();
+                    PdfWriter writer = PdfWriter.getInstance(doc, out);
+                    writer.setCloseStream(false);
+                    doc.open();
 
-                Document doc = new Document();
-                PdfWriter writer = PdfWriter.getInstance(doc, out);
-                writer.setCloseStream(false);
-                doc.open();
+                    PdfContentByte cb = writer.getDirectContent();
+                    PdfImportedPage page = writer.getImportedPage(sourcePdf, num);
+                    cb.addTemplate(page, 0, 0);
 
-                PdfContentByte cb = writer.getDirectContent();
-                PdfImportedPage page = writer.getImportedPage(sourcePdf, num);
-                cb.addTemplate(page, 0, 0);
-
-                doc.close();
-                out.closeEntry();
+                    doc.close();
+                    out.closeEntry();
+                }
             }
-            out.flush();
-            out.close();
+            return filename;
         } catch (IOException | DocumentException ex) {
-            ex.printStackTrace();
+            LOG.warn(ex.getMessage(), ex);
             return null;
         }
-        return filename;
     }
 
     @Override
     public Split split(MultipartFile file, String pages, Boolean singleFile) {
         String filename;
-        if (singleFile)
+        if (Boolean.TRUE.equals(singleFile))
             filename = processToFile(file, convert(pages));
         else
             filename = processToZip(file, convert(pages));
@@ -124,7 +133,7 @@ public class PdfServiceImpl implements PdfService {
 
     @Override
     public Merge merge(ArrayList<MultipartFile> files) {
-        String filename = tmp + "result.pdf";
+        String filename = TMP_DIR + "result.pdf";
         Merge merge = new Merge();
         try {
             Document doc = new Document();
@@ -161,35 +170,37 @@ public class PdfServiceImpl implements PdfService {
         String settings = "-dPDFSETTINGS=/ebook";
         String nopause = "-dNOPAUSE";
         String batch = "-dBATCH";
-        String outputFile = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf(".")) + "-compressed.pdf";
-        String output = "-sOutputFile=" + tmp + outputFile;
+        String originalName = file.getOriginalFilename();
+        if (originalName == null)
+            return null;
+        String outputFile = originalName.substring(0, originalName.lastIndexOf(".")) + "-compressed.pdf";
+        String output = "-sOutputFile=" + TMP_DIR + outputFile;
 
-        File origFile = new File(tmp + file.getOriginalFilename());
-        File compFile = new File(tmp + outputFile);
-        try {
+        File origFile = new File(TMP_DIR + file.getOriginalFilename());
+        File compFile = new File(TMP_DIR + outputFile);
+        try (BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(origFile))) {
             byte[] bytes = file.getBytes();
-            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(origFile));
             out.write(bytes);
-            out.close();
-
-            String[] cmd = {gsbin, quiet, device, settings, nopause, batch, output, origFile.getAbsolutePath()};
-            Process p = Runtime.getRuntime().exec(cmd);
-            try {
-                p.waitFor();
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
+        String[] cmd = {gsbin, quiet, device, settings, nopause, batch, output, origFile.getAbsolutePath()};
+        try {
+            Process p = Runtime.getRuntime().exec(cmd);
+            p.waitFor();
+        } catch (IOException ex) {
+            LOG.warn(ex.getMessage(), ex);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+
         Compress compress = new Compress();
-        Double rate = 1 - (double) compFile.length() / origFile.length();
+        double rate = 1 - (double) compFile.length() / origFile.length();
         if (rate >= 0.05) {
             compress.setSuccess(true);
             compress.setFilename(compFile.getPath());
-            compress.setComressRate(rate);
+            compress.setCompressRate(rate);
         } else {
             compress.setSuccess(false);
             compress.setMessage("File cannot be compressed");

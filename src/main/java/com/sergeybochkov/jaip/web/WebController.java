@@ -1,34 +1,34 @@
 package com.sergeybochkov.jaip.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 @Controller
 @RequestMapping("/")
-public class WebController {
+public final class WebController {
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/weather/")
+    @GetMapping("/weather/")
     public String weather() {
         return "weather";
     }
 
-    @RequestMapping("/exchange/")
+    @GetMapping("/exchange/")
     public String exchange() {
         return "exchange";
     }
 
-    @RequestMapping("/news/")
+    @GetMapping("/news/")
     public String news() {
         return "news";
     }
 
-    @RequestMapping("/about/")
+    @GetMapping("/about/")
     public String about() {
         return "about";
     }

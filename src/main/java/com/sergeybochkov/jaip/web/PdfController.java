@@ -1,48 +1,53 @@
 package com.sergeybochkov.jaip.web;
 
-import com.sergeybochkov.jaip.model.pdf.Compress;
-import com.sergeybochkov.jaip.model.pdf.Merge;
-import com.sergeybochkov.jaip.model.pdf.Split;
-import com.sergeybochkov.jaip.service.PdfService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
+import com.sergeybochkov.jaip.model.pdf.Compress;
+import com.sergeybochkov.jaip.model.pdf.Merge;
+import com.sergeybochkov.jaip.model.pdf.Split;
+import com.sergeybochkov.jaip.service.PdfService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Slf4j
 @Controller
 @RequestMapping("/pdf")
-public class PdfController {
+@RequiredArgsConstructor
+public final class PdfController {
 
-    @Autowired
-    private PdfService pdfService;
+    private final PdfService pdfService;
 
     @RequestMapping("/")
     public String pdf() {
         return "pdf/index";
     }
 
-    @RequestMapping(value = "/split/", method = RequestMethod.GET)
-    public String split(Split split) {
+    @GetMapping(value = "/split/")
+    public String split(Model model) {
+        model.addAttribute("split", new Split());
         return "pdf/split";
     }
 
-    @RequestMapping(value = "/split/", method = RequestMethod.POST)
+    @PostMapping(value = "/split/")
     public String split(@Valid Split split, BindingResult bindingResult, HttpServletResponse response) {
         if (bindingResult.hasErrors())
             return "pdf/split";
 
-        try {
-            Split spl = pdfService.split(split.getFile(), split.getPages(), split.getSingleFile());
-            InputStream is = new FileInputStream(spl.getFilename());
-            if (split.getSingleFile())
+        Split spl = pdfService.split(split.getFile(), split.getPages(), split.getSingleFile());
+        try (InputStream is = new FileInputStream(spl.getFilename())) {
+            if (Boolean.TRUE.equals(split.getSingleFile()))
                 response.setContentType("application/pdf");
             else
                 response.setContentType("application/x-zip-compressed");
@@ -50,68 +55,65 @@ public class PdfController {
             String filename = spl.getFilename().substring(spl.getFilename().lastIndexOf(File.separator) + 1);
             response.setHeader("Content-Disposition", "attachment; filename=" + filename);
             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            is.close();
-            new File(spl.getFilename()).delete();
+            Files.deleteIfExists(new File(spl.getFilename()).toPath());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            LOG.warn(ex.getMessage(), ex);
         }
         return "redirect:/pdf/split/";
     }
 
-    @RequestMapping(value = "/merge/", method = RequestMethod.GET)
-    public String merge(Merge merge) {
+    @GetMapping(value = "/merge/")
+    public String merge(Model model) {
+        model.addAttribute("merge", new Merge());
         return "pdf/merge";
     }
 
-    @RequestMapping(value = "/merge/", method = RequestMethod.POST)
+    @PostMapping(value = "/merge/")
     public String merge(@Valid Merge merge, BindingResult bindingResult, HttpServletResponse response) {
         if (bindingResult.hasErrors())
             return "pdf/merge";
 
-        try {
-            Merge mrg = pdfService.merge(merge.getFiles());
-            InputStream is = new FileInputStream(mrg.getFilename());
+        Merge mrg = pdfService.merge(merge.getFiles());
+        try (InputStream is = new FileInputStream(mrg.getFilename())) {
             response.setContentType("application/pdf");
             String filename = mrg.getFilename().substring(mrg.getFilename().lastIndexOf(File.separator) + 1);
             response.setHeader("Content-Disposition", "attachment; filename=" + filename);
             org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
-            is.close();
-            new File(mrg.getFilename()).delete();
+            Files.deleteIfExists(new File(mrg.getFilename()).toPath());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            LOG.warn(ex.getMessage(), ex);
         }
         return "redirect:/pdf/merge/";
     }
 
-    @RequestMapping(value = "/compress/", method = RequestMethod.GET)
-    public String compress(Compress compress) {
+    @GetMapping(value = "/compress/")
+    public String compress(Model model) {
+        model.addAttribute("compress", new Compress());
         return "pdf/compress";
     }
 
-    @RequestMapping(value = "/compress/", method = RequestMethod.POST)
+    @PostMapping(value = "/compress/")
     public String compress(@Valid Compress compress, BindingResult bindingResult, HttpServletResponse response) {
         if (bindingResult.hasErrors())
             return "pdf/compress";
 
-        try {
-            Compress cmp = pdfService.compress(compress.getFile());
-            if (cmp.getSuccess()) {
-                InputStream is = new FileInputStream(cmp.getFilename());
+        Compress cmp = pdfService.compress(compress.getFile());
+        if (Boolean.TRUE.equals(cmp.getSuccess())) {
+            try (InputStream is = new FileInputStream(cmp.getFilename())) {
                 response.setContentType("application/pdf");
                 String filename = cmp.getFilename().substring(cmp.getFilename().lastIndexOf(File.separator) + 1);
                 response.setHeader("Content-Disposition", "attachment; filename=" + filename);
                 org.apache.commons.io.IOUtils.copy(is, response.getOutputStream());
                 response.flushBuffer();
-                is.close();
-                new File(cmp.getFilename()).delete();
+                Files.deleteIfExists(new File(cmp.getFilename()).toPath());
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
         return "pdf/compress";
     }
 
-    @RequestMapping(value = "/help/")
+    @GetMapping(value = "/help/")
     public String help() {
         return "pdf/help";
     }

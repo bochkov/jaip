@@ -4,24 +4,22 @@
       "description": "Главные нoвости",
       "slug": "main",
       "urls": [
-        "http://www.gazeta.ru/export/rss/first.xml",
-        "http://static.feed.rbc.ru/rbc/internal/rss.rbc.ru/rbc.ru/mainnews.rss"
+        "https://www.gazeta.ru/export/rss/first.xml"
       ]
     },
     {
       "description": "Новости металлургии",
       "slug": "met",
       "urls": [
-        "http://www.metalinfo.ru/ru/news/news.rss"
+        "https://www.metalinfo.ru/ru/news/list.rss"
       ]
     },
     {
       "description": "Спорт",
       "slug": "sport",
       "urls": [
-        "http://www.gazeta.ru/export/rss/sportnews.xml",
-        "http://www.sports.ru/rss/all_news.xml",
-        "http://prosport-online.ru/rss_news"
+        "https://www.gazeta.ru/export/rss/sportnews.xml",
+        "https://www.sports.ru/rss/all_news.xml"
       ]
     }
   ]

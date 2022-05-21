@@ -1,21 +1,22 @@
 package com.sergeybochkov.jaip.web;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
-import org.springframework.stereotype.Controller;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-public class ErrController implements ErrorController {
+@Component
+public final class ErrController extends BasicErrorController {
 
-    private static final String errorPath = "/error/";
+    private static final String ERROR_PATH = "/error/";
 
-    @RequestMapping(value = errorPath)
-    public String error() {
-        return "404";
+    public ErrController(ErrorAttributes errorAttributes, ServerProperties serverProperties) {
+        super(errorAttributes, serverProperties.getError());
     }
 
-    @Override
-    public String getErrorPath() {
-        return errorPath;
+    @RequestMapping(value = ERROR_PATH)
+    public String error() {
+        return "404";
     }
 }

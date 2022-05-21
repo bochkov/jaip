@@ -1,16 +1,11 @@
 package com.sergeybochkov.jaip.model.pdf.validator;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-public class PagesValidator implements ConstraintValidator<Pages, String> {
-
-    @Override
-    public void initialize(Pages annotation) {
-    }
-
+public final class PagesValidator implements ConstraintValidator<Pages, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null)
@@ -21,7 +16,7 @@ public class PagesValidator implements ConstraintValidator<Pages, String> {
         if (m.matches())
             return false;
 
-        pattern = Pattern.compile("[0-9\\-,]+");
+        pattern = Pattern.compile("[\\d\\-,]+");
         m = pattern.matcher(value);
         return m.matches();
     }

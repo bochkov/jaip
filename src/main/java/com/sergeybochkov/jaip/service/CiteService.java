@@ -4,7 +4,7 @@ import com.sergeybochkov.jaip.model.Cite;
 
 public interface CiteService {
 
-    String FORISMATIC_API_URL = "http://api.forismatic.com/api/1.0/";
+    String FORISMATIC_API_URL = "https://api.forismatic.com/api/1.0/";
 
     Cite get();
 }

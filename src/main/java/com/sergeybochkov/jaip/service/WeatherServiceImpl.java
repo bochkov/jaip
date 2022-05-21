@@ -1,33 +1,32 @@
 package com.sergeybochkov.jaip.service;
 
-import com.sergeybochkov.jaip.helper.Helper;
-import com.sergeybochkov.jaip.helper.Settings;
+import com.sergeybochkov.jaip.helper.Resource;
 import com.sergeybochkov.jaip.model.forecast.Weather;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WeatherServiceImpl implements WeatherService {
+@RequiredArgsConstructor
+public final class WeatherServiceImpl implements WeatherService {
 
-    @Autowired
-    private Helper helper;
+    private final Resource resource;
 
     @Value("${openweather.api.key}")
-    private String API_KEY;
-
-    @Override
-    public Weather get() {
-        return get(Settings.DEFAULT_CITY);
-    }
+    private String apiKey;
 
     @Override
     public Weather get(String city) {
+        return get(city, "ru");
+    }
+
+    @Override
+    public Weather get(String city, String lang) {
         String units = "metric";
         String params = "q=" + city +
                 "&units=" + units +
-                "&lang=" + Settings.DEFAULT_LANG +
-                "&APPID=" + API_KEY;
-        return helper.doGetJson(WEATHER_URL, params, Weather.class);
+                "&lang=" + lang +
+                "&APPID=" + apiKey;
+        return resource.getJson(WEATHER_URL, params, Weather.class);
     }
 }

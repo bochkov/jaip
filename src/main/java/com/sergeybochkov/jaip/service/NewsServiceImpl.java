@@ -1,108 +1,88 @@
 package com.sergeybochkov.jaip.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.concurrent.*;
+
 import com.google.gson.Gson;
-import com.sergeybochkov.jaip.helper.Helper;
+import com.sergeybochkov.jaip.helper.Resource;
 import com.sergeybochkov.jaip.model.news.News;
 import com.sergeybochkov.jaip.model.news.Source;
 import com.sergeybochkov.jaip.model.news.SourceRoot;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import java.io.InputStreamReader;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
+@Slf4j
 @Service
-public class NewsServiceImpl implements NewsService {
+@RequiredArgsConstructor
+public final class NewsServiceImpl implements NewsService {
 
-    @Autowired
-    private Helper helper;
-    private ArrayList<News> newsFeeds;
+    private static final CompletionService<List<News>> EXECUTOR = new ExecutorCompletionService<>(
+            Executors.newFixedThreadPool(5)
+    );
 
-    private String getText(Element element, String tagName) {
-        NodeList list = element.getElementsByTagName(tagName);
-        if (list.getLength() > 0)
-            return list.item(0).getTextContent().trim();
-        return "";
-    }
-
-    private String getAttr(Element element, String tagName, String attrName) {
-        NodeList list = element.getElementsByTagName(tagName);
-        if (list.getLength() > 0) {
-            Element el = (Element) list.item(0);
-            return el.getAttribute(attrName);
-        }
-        return "";
-    }
-
-    private Date getDate(Element element, String tagName) {
-        SimpleDateFormat df = new SimpleDateFormat("E, dd MMM y HH:mm:ss Z", Locale.US);
-        Date date = null;
-        try {
-            date = df.parse(getText(element, tagName));
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
-        return date;
-    }
+    private final Resource resource;
 
     @Override
     public List<News> getLatest(String slug) {
-
-        newsFeeds = new ArrayList<>();
-
-        Gson gson = new Gson();
-        InputStreamReader in = new InputStreamReader(this.getClass().getResourceAsStream("/news.json"));
-        SourceRoot sourceRoot = gson.fromJson(in, SourceRoot.class);
-
-        Source source = sourceRoot.getSourceBySlug(slug);
-        if (source == null)
-            return null;
-
-        ArrayList<Thread> threads = new ArrayList<>(source.getUrls().size());
-        for (String url : source.getUrls()) {
-            Worker worker = new Worker(url);
-            threads.add(new Thread(worker));
+        List<Future<List<News>>> futures = new ArrayList<>();
+        try (InputStream sourceData = this.getClass().getResourceAsStream("/news.json")) {
+            if (sourceData == null)
+                return Collections.emptyList();
+            InputStreamReader in = new InputStreamReader(sourceData);
+            SourceRoot sourceRoot = new Gson().fromJson(in, SourceRoot.class);
+            Source source = sourceRoot.getSourceBySlug(slug);
+            if (source == null)
+                return Collections.emptyList();
+            else {
+                for (String url : source.getUrls()) {
+                    futures.add(EXECUTOR.submit(new NewsFetch(url)));
+                }
+            }
+        } catch (IOException ex) {
+            LOG.warn(ex.getMessage(), ex);
         }
 
-        for (Thread t : threads)
-            t.start();
-
-        for (Thread t : threads)
+        List<News> news = new ArrayList<>();
+        for (Future<List<News>> future : futures) {
             try {
-                t.join();
+                news.addAll(future.get());
+            } catch (ExecutionException ex) {
+                LOG.warn(ex.getMessage(), ex);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                Thread.currentThread().interrupt();
             }
-
-        return newsFeeds;
+        }
+        news.sort(Comparator.comparing(News::getPubDate).reversed());
+        return news;
     }
 
-    private class Worker implements Runnable {
 
-        private String url;
+    @RequiredArgsConstructor
+    private class NewsFetch implements Callable<List<News>> {
 
-        public Worker(String url) {
-            this.url = url;
-        }
+        private final String url;
 
         @Override
-        public void run() {
-            Document dom = helper.doGetXml(url, "");
-            if (dom == null) return;
+        public List<News> call() {
+            Document dom = resource.getXml(url);
+            if (dom == null)
+                return Collections.emptyList();
 
             Element channel = (Element) dom.getElementsByTagName("channel").item(0);
             String feedTitle = getText(channel, "title");
             String feedLink = getText(channel, "link");
             String feedDescription = getText(channel, "description");
 
+            List<News> news = new ArrayList<>();
             NodeList items = channel.getElementsByTagName("item");
             for (int i = 0; i < items.getLength(); ++i) {
                 Element el = (Element) items.item(i);
@@ -115,8 +95,36 @@ public class NewsServiceImpl implements NewsService {
                 n.setFeedTitle(feedTitle);
                 n.setFeedLink(feedLink);
                 n.setFeedDescription(feedDescription);
-                newsFeeds.add(n);
+                news.add(n);
             }
+            return news;
+        }
+
+        private String getAttr(Element element, String tagName, String attrName) {
+            NodeList list = element.getElementsByTagName(tagName);
+            if (list.getLength() > 0) {
+                Element el = (Element) list.item(0);
+                return el.getAttribute(attrName);
+            }
+            return "";
+        }
+
+        private Date getDate(Element element, String tagName) {
+            SimpleDateFormat df = new SimpleDateFormat("E, dd MMM y HH:mm:ss Z", Locale.US);
+            Date date = null;
+            try {
+                date = df.parse(getText(element, tagName));
+            } catch (ParseException ex) {
+                ex.printStackTrace();
+            }
+            return date;
+        }
+
+        private String getText(Element element, String tagName) {
+            NodeList list = element.getElementsByTagName(tagName);
+            if (list.getLength() > 0)
+                return list.item(0).getTextContent().trim();
+            return "";
         }
     }
 }

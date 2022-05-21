@@ -1,11 +1,11 @@
 package com.sergeybochkov.jaip.service;
 
+import java.util.ArrayList;
+
 import com.sergeybochkov.jaip.model.pdf.Compress;
 import com.sergeybochkov.jaip.model.pdf.Merge;
 import com.sergeybochkov.jaip.model.pdf.Split;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.ArrayList;
 
 public interface PdfService {
 

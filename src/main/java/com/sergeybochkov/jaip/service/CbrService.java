@@ -1,20 +1,20 @@
 package com.sergeybochkov.jaip.service;
 
-import com.sergeybochkov.jaip.model.cbr.Valute;
-import com.sergeybochkov.jaip.model.cbr.ValuteRate;
-
 import java.util.List;
+
+import com.sergeybochkov.jaip.model.cbr.Currency;
+import com.sergeybochkov.jaip.model.cbr.CurrencyRate;
 
 public interface CbrService {
 
-    String VALUTES_URL = "http://www.cbr.ru/scripts/XML_val.asp";
+    String CURRENCIES_URL = "http://www.cbr.ru/scripts/XML_val.asp";
     String DYNAMIC_URL = "http://www.cbr.ru/scripts/XML_dynamic.asp";
 
-    List<Valute> getValutes();
+    List<Currency> getCurrencies();
 
-    ValuteRate getValuteRate(String valuteId);
+    CurrencyRate getCurrencyRate(String currencyId);
 
-    ValuteRate getPeriodValuteRate(String valuteId);
+    CurrencyRate getPeriodCurrencyRate(String currencyId);
 
-    ValuteRate getPeriodValuteRate(String valuteId, Integer days);
+    CurrencyRate getPeriodCurrencyRate(String currencyId, Integer days);
 }

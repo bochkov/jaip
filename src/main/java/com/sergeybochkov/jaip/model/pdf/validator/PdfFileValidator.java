@@ -1,17 +1,13 @@
 package com.sergeybochkov.jaip.model.pdf.validator;
 
-import com.lowagie.text.pdf.PdfReader;
-import org.springframework.web.multipart.MultipartFile;
-
+import java.io.IOException;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.io.IOException;
 
-public class PdfFileValidator implements ConstraintValidator<PdfFile, MultipartFile> {
-    @Override
-    public void initialize(PdfFile annotation) {
-    }
+import com.itextpdf.text.pdf.PdfReader;
+import org.springframework.web.multipart.MultipartFile;
 
+public final class PdfFileValidator implements ConstraintValidator<PdfFile, MultipartFile> {
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
         if (multipartFile == null)

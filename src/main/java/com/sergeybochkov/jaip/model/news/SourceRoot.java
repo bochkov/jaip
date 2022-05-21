@@ -2,17 +2,14 @@ package com.sergeybochkov.jaip.model.news;
 
 import java.util.ArrayList;
 
-public class SourceRoot {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public final class SourceRoot {
 
     private ArrayList<Source> newsSource;
-
-    public ArrayList<Source> getNewsSource() {
-        return newsSource;
-    }
-
-    public void setNewsSource(ArrayList<Source> newsSource) {
-        this.newsSource = newsSource;
-    }
 
     public Source getSourceBySlug(String slug) {
         for (Source source : getNewsSource())
