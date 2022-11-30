@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/_header::header"></head>
+<head th:replace="~{ include/_header::header }"></head>
 <body ng-app="myApp">
 
 <div id="wrap">
     <div class="container-narrow">
 
-        <div th:replace="include/_menu::menu"></div>
+        <div th:replace="~{ include/_menu::menu }"></div>
 
         <div class="page-title">
             <div class="row">
@@ -16,7 +16,6 @@
                 </div>
                 <div class="col-md-8">
                     <h1>JAIP</h1>
-
                     <p class="lead">just another index page</p>
                 </div>
             </div>
@@ -27,22 +26,22 @@
         <div class="row" id="content">
             <div class="col-md-7">
                 <div ng-controller="WeatherController" ng-init="get_weather()">
-                    <div th:replace="include/weather_widget :: weather"></div>
+                    <div th:replace="~{ include/weather_widget :: weather }"></div>
                 </div>
             </div>
             <div class="col-md-5">
                 <div ng-controller="ExchangeController" ng-init="get_exchange()">
-                    <div th:replace="include/exchange_widget :: exchange"></div>
+                    <div th:replace="~{ include/exchange_widget :: exchange }"></div>
                 </div>
                 <div ng-controller="ForismaticController" ng-init="get_forismatic()">
-                    <div th:replace="include/forismatic_widget :: forismatic"></div>
+                    <div th:replace="~{ include/forismatic_widget :: forismatic }"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div th:replace="include/_footer :: footer"></div>
+<div th:replace="~{ include/_footer :: footer }"></div>
 
 </body>
 </html>

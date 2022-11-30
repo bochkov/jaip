@@ -1,11 +1,10 @@
 package com.sergeybochkov.jaip.web.api;
 
-import javax.validation.Valid;
-
 import com.sergeybochkov.jaip.model.pdf.Compress;
 import com.sergeybochkov.jaip.model.pdf.Merge;
 import com.sergeybochkov.jaip.model.pdf.Split;
 import com.sergeybochkov.jaip.service.PdfService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

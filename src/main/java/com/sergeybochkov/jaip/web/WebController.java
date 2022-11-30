@@ -1,12 +1,20 @@
 package com.sergeybochkov.jaip.web;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
 public final class WebController {
+
+    @ModelAttribute("requestUri")
+    public String requestUri(final HttpServletRequest request) {
+        return request.getRequestURI();
+    }
 
     @GetMapping("/")
     public String index() {

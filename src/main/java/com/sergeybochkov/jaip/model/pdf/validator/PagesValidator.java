@@ -2,8 +2,9 @@ package com.sergeybochkov.jaip.model.pdf.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public final class PagesValidator implements ConstraintValidator<Pages, String> {
     @Override

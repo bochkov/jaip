@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/_header::header"></head>
+<head th:replace="~{ include/_header::header }"></head>
 <body ng-app="myApp">
 
 <div id="wrap">
     <div class="container-narrow">
 
-        <div th:replace="include/_menu::menu"></div>
+        <div th:replace="~{ include/_menu::menu }"></div>
 
         <div class="page-title" ng-controller="ImageController">
             <img id="logo" ng-src="{{path}}" ng-click="random_image(4, '/static/img/news/')"
@@ -51,7 +51,7 @@
 
 </div>
 
-<div th:replace="include/_footer :: footer"></div>
+<div th:replace="~{ include/_footer :: footer }"></div>
 <script>
     $(function () {
         var sc = $("#scroller");

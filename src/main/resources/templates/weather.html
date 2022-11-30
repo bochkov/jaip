@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="include/_header::header"></head>
+<head th:replace="~{ include/_header::header }"></head>
 <body ng-app="myApp">
 
 <div id="wrap" ng-controller="WeatherController" ng-init="get_weather()">
     <div class="container-narrow">
 
-        <div th:replace="include/_menu::menu"></div>
+        <div th:replace="~{ include/_menu::menu }"></div>
 
         <div class="page-title">
             <div class="row">
@@ -122,7 +122,7 @@
     </div>
 </div>
 
-<div th:replace="include/_footer :: footer"></div>
+<div th:replace="~{ include/_footer :: footer }"></div>
 
 <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&amp;lang=ru-RU"
         type="text/javascript"></script>

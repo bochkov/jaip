@@ -1,9 +1,9 @@
 package com.sergeybochkov.jaip.model.pdf.validator;
 
 import java.util.List;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
 
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
 
 public final class FilesNotEmptyValidator implements ConstraintValidator<FileNotEmpty, List<MultipartFile>> {

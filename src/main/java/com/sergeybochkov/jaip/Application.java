@@ -1,7 +1,6 @@
 package com.sergeybochkov.jaip;
 
-import javax.servlet.MultipartConfigElement;
-
+import jakarta.servlet.MultipartConfigElement;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
